@@ -6,48 +6,36 @@
     <title>Login - Tech Shop</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8fafc;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         .login-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            padding: 40px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+            padding: 2.5rem;
             width: 100%;
-            max-width: 420px;
-            animation: fadeInUp 0.6s ease;
+            max-width: 400px;
         }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .login-card h2 {
-            font-weight: 700;
-            color: #1e3c72;
-        }
+        .login-card h2 { font-weight: 700; color: #0f172a; }
         .btn-login {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #2563eb;
             border: none;
-            padding: 12px;
+            padding: 0.65rem;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
-        .btn-login:hover {
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102,126,234,0.4);
-        }
+        .btn-login:hover { background-color: #1d4ed8; }
         .form-control:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102,126,234,0.25);
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
         }
     </style>
 </head>
@@ -58,24 +46,24 @@
             <p class="text-muted">Sign in to your account</p>
         </div>
 
-        <div th:if="${param.error}" class="alert alert-danger">
+        <div th:if="${param.error}" class="alert alert-danger py-2">
             <i class="bi bi-exclamation-triangle"></i> Invalid username or password.
         </div>
-        <div th:if="${param.logout}" class="alert alert-success">
+        <div th:if="${param.logout}" class="alert alert-success py-2">
             <i class="bi bi-check-circle"></i> You have been logged out.
         </div>
-        <div th:if="${param.registered}" class="alert alert-success">
+        <div th:if="${param.registered}" class="alert alert-success py-2">
             <i class="bi bi-check-circle"></i> Registration successful! Please login.
         </div>
 
         <form th:action="@{/login}" method="post">
             <div class="mb-3">
-                <label class="form-label"><i class="bi bi-person"></i> Username</label>
-                <input type="text" name="username" class="form-control form-control-lg" placeholder="Enter username" required autofocus>
+                <label class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" placeholder="Enter username" required autofocus>
             </div>
             <div class="mb-3">
-                <label class="form-label"><i class="bi bi-lock"></i> Password</label>
-                <input type="password" name="password" class="form-control form-control-lg" placeholder="Enter password" required>
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Enter password" required>
             </div>
             <button type="submit" class="btn btn-login btn-primary w-100 mb-3">
                 <i class="bi bi-box-arrow-in-right"></i> Login
@@ -83,7 +71,7 @@
         </form>
 
         <div class="text-center">
-            <p class="mb-0">Don't have an account? <a href="/register" class="text-decoration-none">Register here</a></p>
+            <p class="mb-0 text-muted">Don't have an account? <a href="/register">Register here</a></p>
         </div>
     </div>
 </body>

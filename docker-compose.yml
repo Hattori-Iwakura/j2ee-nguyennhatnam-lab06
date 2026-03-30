@@ -1,0 +1,14 @@
+services:
+  mysql:
+    image: mysql:8
+    container_name: tech-shop-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: tech_shop
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:

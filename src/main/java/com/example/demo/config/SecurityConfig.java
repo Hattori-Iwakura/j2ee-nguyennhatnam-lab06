@@ -23,6 +23,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/register", "/login", "/css/**", "/js/**").permitAll()
                 .requestMatchers("/products/add", "/products/edit/**", "/products/delete/**").hasRole("ADMIN")
+                .requestMatchers("/cart/**", "/cart").authenticated()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form

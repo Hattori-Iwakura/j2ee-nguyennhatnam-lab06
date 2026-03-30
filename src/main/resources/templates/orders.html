@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layout/base :: layout(~{::main})}">
+<body>
+<main>
+    <h2><i class="bi bi-receipt"></i> Order History</h2>
+
+    <div th:if="${#lists.isEmpty(orders)}" class="alert alert-info">
+        <i class="bi bi-info-circle"></i> You haven't placed any orders yet.
+        <a th:href="@{/products}" class="alert-link">Start shopping</a>
+    </div>
+
+    <div th:unless="${#lists.isEmpty(orders)}">
+        <div th:each="order : ${orders}" class="border rounded-3 overflow-hidden mb-3">
+            <div class="d-flex justify-content-between align-items-center p-3" style="background-color: #1e293b; color: #fff;">
+                <div>
+                    <strong>Order #<span th:text="${order.id}"></span></strong>
+                    <span class="ms-3 opacity-75" th:text="${#temporals.format(order.orderDate, 'dd/MM/yyyy HH:mm')}"></span>
+                </div>
+                <span class="fw-bold" th:text="${#numbers.formatDecimal(order.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span>
+            </div>
+            <div class="p-0">
+                <table class="table table-sm align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th style="background-color: #f1f5f9; padding: 0.5rem 1rem; font-size: 0.75rem;">Product</th>
+                            <th class="text-end-col" style="background-color: #f1f5f9; padding: 0.5rem 1rem; font-size: 0.75rem;">Price</th>
+                            <th class="text-end-col" style="background-color: #f1f5f9; padding: 0.5rem 1rem; font-size: 0.75rem;">Qty</th>
+                            <th class="text-end-col" style="background-color: #f1f5f9; padding: 0.5rem 1rem; font-size: 0.75rem;">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="detail : ${order.orderDetails}">
+                            <td style="padding: 0.5rem 1rem; font-size: 0.875rem;" th:text="${detail.productName}"></td>
+                            <td class="text-end-col" style="padding: 0.5rem 1rem; font-size: 0.875rem;" th:text="${#numbers.formatDecimal(detail.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
+                            <td class="text-end-col" style="padding: 0.5rem 1rem; font-size: 0.875rem;" th:text="${detail.quantity}"></td>
+                            <td class="text-end-col fw-bold" style="padding: 0.5rem 1rem; font-size: 0.875rem;" th:text="${#numbers.formatDecimal(detail.subtotal, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layout/base :: layout(~{::main})}">
+<body>
+<main>
+    <div class="text-center mb-4">
+        <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+        <h2 class="mt-2">Order Placed Successfully!</h2>
+        <p class="text-muted">Thank you for your purchase.</p>
+    </div>
+
+    <div class="border rounded-3 overflow-hidden mb-4">
+        <div class="p-3" style="background-color: #1e293b; color: #fff;">
+            <h6 class="mb-0"><i class="bi bi-receipt"></i> Order #<span th:text="${order.id}"></span></h6>
+        </div>
+        <div class="p-3">
+            <p class="mb-1"><strong>Order Date:</strong> <span th:text="${#temporals.format(order.orderDate, 'dd/MM/yyyy HH:mm')}"></span></p>
+            <p class="mb-3"><strong>Customer:</strong> <span th:text="${order.username}"></span></p>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="detail, iterStat : ${order.orderDetails}">
+                            <td th:text="${iterStat.index + 1}"></td>
+                            <td th:text="${detail.productName}"></td>
+                            <td th:text="${#numbers.formatDecimal(detail.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
+                            <td th:text="${detail.quantity}"></td>
+                            <td th:text="${#numbers.formatDecimal(detail.subtotal, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr style="background-color: #1e293b; color: #fff;">
+                            <td colspan="4" class="text-end fw-bold">Total:</td>
+                            <td class="fw-bold" th:text="${#numbers.formatDecimal(order.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center d-flex justify-content-center gap-2">
+        <a th:href="@{/products}" class="btn btn-primary">
+            <i class="bi bi-arrow-left"></i> Back to Products
+        </a>
+        <a th:href="@{/orders}" class="btn btn-secondary">
+            <i class="bi bi-receipt"></i> View Order History
+        </a>
+    </div>
+</main>
+</body>
+</html>
